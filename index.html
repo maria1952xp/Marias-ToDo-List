@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maria’s To-Do List</title>
+    <style>
+        body {
+            font-family: 'Bradley Hand ITC', 'Ink Free', cursive;
+            background-color: #ffe4e1; /* blush pink */
+            color: #4b0082; /* lavender purple */
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #ffc0cb; /* pink */
+            color: #fff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5dc; /* beige */
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .task-item.complete {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .task-item button {
+            background-color: #dda0dd; /* purple lavender */
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .task-item button:hover {
+            opacity: 0.8;
+        }
+
+        .task-form input, .task-form select, .task-form button {
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        .dark-mode {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .dark-mode .container {
+            background-color: #444;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #ffc0cb; /* pink */
+            color: #fff;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Maria’s To-Do List</h1>
+        <p>Hi, I’m Maria Moju, an aspiring computer scientist with a passion for web development and learning new technologies. This is my first web development project—my To-Do List App!</p>
+    </header>
+    <div class="container">
+        <form class="task-form">
+            <input type="text" id="task-name" placeholder="Enter a task...">
+            <select id="task-category">
+                <option value="Work">Work</option>
+                <option value="Personal">Personal</option>
+                <option value="Study">Study</option>
+            </select>
+            <input type="date" id="task-due-date">
+            <select id="task-priority">
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+            <button type="button" onclick="addTask()">Add Task</button>
+        </form>
+
+        <ul class="task-list" id="task-list"></ul>
+
+        <button onclick="clearAllTasks()">Clear All Tasks</button>
+        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    </div>
+
+    <footer>
+        <p>Contact me: <a href="mailto:maria.maju1952@gmail.com">maria.maju1952@gmail.com</a></p>
+        <p>GitHub: <a href="https://github.com/maria1952xp" target="_blank">https://github.com/maria1952xp</a></p>
+    </footer>
+
+    <script>
+        let isDarkMode = false;
+
+        function addTask() {
+            const taskName = document.getElementById('task-name').value;
+            const taskCategory = document.getElementById('task-category').value;
+            const taskDueDate = document.getElementById('task-due-date').value;
+            const taskPriority = document.getElementById('task-priority').value;
+
+            if (taskName.trim() === '') {
+                alert('Please enter a task name.');
+                return;
+            }
+
+            const taskList = document.getElementById('task-list');
+            const listItem = document.createElement('li');
+            listItem.className = 'task-item';
+            listItem.innerHTML = `
+                <span>${taskName} [${taskCategory}] - Due: ${taskDueDate} - Priority: ${taskPriority}</span>
+                <button onclick="completeTask(this)">✔️</button>
+            `;
+
+            taskList.appendChild(listItem);
+            document.getElementById('task-name').value = '';
+        }
+
+        function completeTask(button) {
+            const taskItem = button.parentElement;
+            taskItem.classList.toggle('complete');
+        }
+
+        function clearAllTasks() {
+            const taskList = document.getElementById('task-list');
+            taskList.innerHTML = '';
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('dark-mode', isDarkMode);
+        }
+    </script>
+</body>
+</html>
